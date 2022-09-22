@@ -7,6 +7,8 @@ FusionChat은 [Stl.Fusion](https://github.com/servicetitan/Stl.Fusion) 라이브
 
 그 예시로 Stl.Fusion을 이용해서 채팅 프로그램을 간단히 만들었습니다.
 
+https://github.com/dimohy/FusionChat
+
 
 ## 개요
 
