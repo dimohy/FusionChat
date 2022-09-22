@@ -76,7 +76,7 @@ public virtual async Task<ChatInfo> GetChatMessages(int index, CancellationToken
 
 ### 컴퓨팅 값의 무효화
 
-위의 `GetChatMessages()`의 결과가 캐싱되는 생명주기는 반드시 `SendMessage()`가 호출되었을 끝나야 합니다. 그렇죠? 새로운 메시지가 추가되었으니까요. 이것을 다음의 코드를 통해 살펴볼 수 있습니다.
+위의 `GetChatMessages()`의 결과가 캐싱되는 생명주기는 반드시 `SendMessage()`가 호출되었을 때 끝나야 합니다. 그렇죠? 새로운 메시지가 추가되었으니까요. 이것을 다음의 코드를 통해 살펴볼 수 있습니다.
 
 
 ```csharp
@@ -184,7 +184,7 @@ public Task SendMessage(ChatMessage message, CancellationToken cancellationToken
 `index`에 상관없이 `GetChatMessages()`의 캐싱된 전체 값을 무효화 하기 위한 트릭으로 아무것도 계산하지 않는 `EveryChatTail()`을 만들고, `SendMessage()`에서 `EveryChatTail()` 으로 캐싱된 값을 무효화 한 후 `GetChatMessages()`에서 단지 한번 `await EveryChatTail()`로 호출해줌으로써 의존성을 만들었습니다.
 
 | 의존성 관계
-EveryChatTail() <- GetChatMessages()
+> EveryChatTail() <- GetChatMessages()
 
 즉, `EveryChatTail()`의 값이 무효화 되면 `index`와 상관없이 `GetChatMessages()`의 캐신된 값도 무효화 됩니다.
 
@@ -234,7 +234,7 @@ _computedState = client.StateFactory.NewComputed<ChatInfo>(new ComputedState<Cha
 > 기본 설정으로인해 `NewComputed()`으로 등록된 콜백 함수가 한번 호출됩니다.
 
 
-이제 되었습니다! 여러개의 폼을 띄워 놓고 어떤에서든지 메시지를 보냈을 때 퓨전은 `GetChatMessages()` 의 값을 무효화 하고 `Publish` 특성에 의해 클라이언트에 다시 `GetChatMessages()`의 값이 변경되었음을 통보하여 `NewComputed()`로 등록한 콜백 함수가 호출되고, 이곳에서 해당 정보를 업데이트 하게 되면 실시간 채팅 앱이 완성되었습니다! ^^
+이제 되었습니다! 여러개의 폼을 띄워 놓고 어떤 폼에서든지 메시지를 보냈을 때 퓨전은 `GetChatMessages()` 의 값을 무효화 하고 `Publish` 특성에 의해 클라이언트에 다시 `GetChatMessages()`의 값이 변경되었음을 통보하여 `NewComputed()`로 등록한 콜백 함수가 호출되고, 이곳에서 해당 정보를 업데이트 하게 되면 실시간 채팅 앱이 완성되었습니다! ^^
 
 클라이언트에서의 컴퓨팅 메서드의 사용은 퓨전의 복제 서비스(Replica Service)에 의해 클라이언트에서도 캐싱이 되어 편안하게 마구마구 API를 호출해도 최적의 속도로 동작합니다.
 
