@@ -197,7 +197,7 @@ EveryChatTail() <- GetChatMessages()
 `FusionChatServer`에서 제공하는 웹API만 가지고서는 실시간 서비스를 제공할 수 없습니다. 똑똑하게도 퓨전은 약간의 조정 만으로 실시간 서비스를 제공하도록 만들 수 있습니다.
 
 
-### 첫번째 조정 `Publish` 특성
+### `Publish` 특성
 
 [FusionChatServer.Controllers.ChatController.cs](https://github.com/dimohy/FusionChat/blob/master/FusionChatServer/Controllers/ChatController.cs) 코드를 보면 `GetMessage()`에 `[Publish]` 특성이 있는 것을 알 수 있습니다. 이 특성으로 인해 퓨전이 해당 API가 무효화 될 때마다 클라이언트로 알려줘야 하는지를 알게 됩니다.
 
